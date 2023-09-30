@@ -1,0 +1,128 @@
+#! /opt/homebrew/Cellar/icarus-verilog/12.0/bin/vvp
+:ivl_version "12.0 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/system.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/vhdl_sys.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/vhdl_textio.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/v2005_math.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/va_math.vpi";
+S_0x12b6051d0 .scope module, "simpleADDER_TB" "simpleADDER_TB" 2 3;
+ .timescale 0 0;
+v0x600003d5c6c0_0 .var "clk", 0 0;
+v0x600003d5c750_0 .var/s "in_0", 24 0;
+v0x600003d5c7e0_0 .var/s "in_1", 24 0;
+v0x600003d5c870_0 .var/s "in_2", 24 0;
+v0x600003d5c900_0 .var/s "in_3", 24 0;
+v0x600003d5c990_0 .net/s "out", 24 0, L_0x60000245ce70;  1 drivers
+S_0x12b605340 .scope module, "simpleADDERMODULE" "simpleADDER" 2 12, 3 1 0, S_0x12b6051d0;
+ .timescale 0 0;
+    .port_info 0 /INPUT 25 "WORD_0";
+    .port_info 1 /INPUT 25 "WORD_1";
+    .port_info 2 /INPUT 25 "WORD_2";
+    .port_info 3 /INPUT 25 "WORD_3";
+    .port_info 4 /INPUT 1 "CLK";
+    .port_info 5 /OUTPUT 25 "RES";
+v0x600003d5c360_2 .array/port v0x600003d5c360, 2;
+L_0x60000245ce70 .functor BUFZ 25, v0x600003d5c360_2, C4<0000000000000000000000000>, C4<0000000000000000000000000>, C4<0000000000000000000000000>;
+v0x600003d5c240_0 .net "CLK", 0 0, v0x600003d5c6c0_0;  1 drivers
+v0x600003d5c2d0_0 .net/s "RES", 24 0, L_0x60000245ce70;  alias, 1 drivers
+v0x600003d5c360 .array/s "SUM", 0 2, 24 0;
+v0x600003d5c3f0_0 .net/s "WORD_0", 24 0, v0x600003d5c750_0;  1 drivers
+v0x600003d5c480_0 .net/s "WORD_1", 24 0, v0x600003d5c7e0_0;  1 drivers
+v0x600003d5c510_0 .net/s "WORD_2", 24 0, v0x600003d5c870_0;  1 drivers
+v0x600003d5c5a0_0 .net/s "WORD_3", 24 0, v0x600003d5c900_0;  1 drivers
+v0x600003d5c630_0 .var/i "i", 31 0;
+E_0x600001a5db80 .event posedge, v0x600003d5c240_0;
+    .scope S_0x12b605340;
+T_0 ;
+    %pushi/vec4 0, 0, 32;
+    %store/vec4 v0x600003d5c630_0, 0, 32;
+T_0.0 ;
+    %load/vec4 v0x600003d5c630_0;
+    %cmpi/s 3, 0, 32;
+    %jmp/0xz T_0.1, 5;
+    %pushi/vec4 0, 0, 25;
+    %ix/getv/s 4, v0x600003d5c630_0;
+    %store/vec4a v0x600003d5c360, 4, 0;
+    %load/vec4 v0x600003d5c630_0;
+    %addi 1, 0, 32;
+    %store/vec4 v0x600003d5c630_0, 0, 32;
+    %jmp T_0.0;
+T_0.1 ;
+    %end;
+    .thread T_0;
+    .scope S_0x12b605340;
+T_1 ;
+    %wait E_0x600001a5db80;
+    %load/vec4 v0x600003d5c3f0_0;
+    %load/vec4 v0x600003d5c480_0;
+    %add;
+    %ix/load 3, 0, 0;
+    %flag_set/imm 4, 0;
+    %ix/load 4, 0, 0; Constant delay
+    %assign/vec4/a/d v0x600003d5c360, 0, 4;
+    %load/vec4 v0x600003d5c510_0;
+    %load/vec4 v0x600003d5c5a0_0;
+    %add;
+    %ix/load 3, 1, 0;
+    %flag_set/imm 4, 0;
+    %ix/load 4, 0, 0; Constant delay
+    %assign/vec4/a/d v0x600003d5c360, 0, 4;
+    %ix/load 4, 0, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0x600003d5c360, 4;
+    %ix/load 4, 1, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0x600003d5c360, 4;
+    %add;
+    %ix/load 3, 2, 0;
+    %flag_set/imm 4, 0;
+    %ix/load 4, 0, 0; Constant delay
+    %assign/vec4/a/d v0x600003d5c360, 0, 4;
+    %jmp T_1;
+    .thread T_1;
+    .scope S_0x12b6051d0;
+T_2 ;
+    %delay 5, 0;
+    %load/vec4 v0x600003d5c6c0_0;
+    %inv;
+    %assign/vec4 v0x600003d5c6c0_0, 0;
+    %jmp T_2;
+    .thread T_2;
+    .scope S_0x12b6051d0;
+T_3 ;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x600003d5c6c0_0, 0, 1;
+    %pushi/vec4 0, 0, 25;
+    %store/vec4 v0x600003d5c750_0, 0, 25;
+    %pushi/vec4 0, 0, 25;
+    %store/vec4 v0x600003d5c7e0_0, 0, 25;
+    %pushi/vec4 0, 0, 25;
+    %store/vec4 v0x600003d5c870_0, 0, 25;
+    %pushi/vec4 0, 0, 25;
+    %store/vec4 v0x600003d5c900_0, 0, 25;
+    %delay 3, 0;
+    %pushi/vec4 5, 0, 25;
+    %assign/vec4 v0x600003d5c750_0, 0;
+    %delay 1, 0;
+    %pushi/vec4 4, 0, 25;
+    %assign/vec4 v0x600003d5c7e0_0, 0;
+    %delay 1, 0;
+    %pushi/vec4 4, 0, 25;
+    %assign/vec4 v0x600003d5c870_0, 0;
+    %delay 1, 0;
+    %pushi/vec4 4, 0, 25;
+    %assign/vec4 v0x600003d5c900_0, 0;
+    %delay 20, 0;
+    %vpi_call 2 35 "$display", "RES: %d", v0x600003d5c990_0 {0 0 0};
+    %delay 10, 0;
+    %vpi_call 2 37 "$finish" {0 0 0};
+    %end;
+    .thread T_3;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "simpleADDER_TB.v";
+    "./simpleADDER.v";
